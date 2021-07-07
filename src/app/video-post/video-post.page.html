@@ -1,0 +1,171 @@
+<ion-header [translucent]="true" *ngIf="show==1">
+   <app-header></app-header>
+</ion-header>
+
+<ion-header [translucent]="true" *ngIf="show==3">
+    <ion-toolbar>
+
+        <ion-buttons slot="start" color="white" (click)="hide_story()">
+            <ion-icon style="color:#fff;" name="chevron-back" class="topmenu"></ion-icon>
+        </ion-buttons>
+		  <ion-title>See All Likes</ion-title>
+
+    </ion-toolbar>
+
+    <ion-content padding fullscreen>
+        <ion-list *ngFor="let likes of model.all_likes_of_post; let lk = index">
+            <ion-list-header (click)="showProfile(likes.profile_pic.user_id)">
+                <ion-avatar item-start>
+                    <img src="{{ imageUrl }}{{ likes.profile_pic.thumb_image }}">
+                </ion-avatar>
+                <ion-label style="margin:15px;">
+                    <h2>{{ likes.username.username }}</h2>
+                    <p>{{ likes.username.username }} like this post.</p>
+                </ion-label>
+
+            </ion-list-header>
+        </ion-list>
+    </ion-content>
+
+</ion-header>
+<ion-header [translucent]="true" *ngIf="show==4">
+    <ion-toolbar>
+
+        <ion-buttons slot="start" (click)="hide_story()">
+            <ion-icon name="chevron-back" class="topmenu"></ion-icon>
+        </ion-buttons>
+
+ <ion-title>See All {{ sortedComment.length }} Comments</ion-title>
+    </ion-toolbar>
+
+    <ion-content padding fullscreen>
+        <ion-list *ngFor="let comment of sortedComment; let cm = index">
+            <ion-list-header (click)="showProfile(comment.profile_pic.user_id)">
+                <ion-avatar item-start style="margin-bottom: 10%;">
+                    <img src="{{ imageUrl }}{{ comment.profile_pic.thumb_image }}">
+                </ion-avatar>
+                <ion-label style="margin:15px;">
+                    <h2>{{ comment.username }}</h2>
+                    <p>{{ comment.created_date | timeAgo }}</p>
+                    <span>{{ comment.comment }}</span>
+                </ion-label>
+
+            </ion-list-header>
+        </ion-list>
+    </ion-content>
+
+</ion-header>
+
+<ion-content style="text-align:center" padding *ngIf="show==1">
+
+    <ion-grid *ngFor="let card of vedios; let i = index" style="padding-inline-end:0px;padding-inline-start:0px;">
+        <ion-card style="margin-inline-end:0px;margin-inline-start:0px;">
+            <ion-item>
+                <ion-avatar item-start style="height:50px;width:50px;">
+                    <img src="{{imageUrl}}{{card.profile_pic.thumb_image}}" (click)="show_profile_2(card)">
+                </ion-avatar>
+                <ion-label style="margin:15px;">
+                    <h2 (click)="show_profile_2(card)">{{card.user_name}} <img *ngIf="card.vstatus == '1'" class="verifyImg" style="width:15px;" src="assets/images/verified.png" /></h2>
+                    <p>{{card.post_created_date}}</p>
+                </ion-label>
+                <ion-icon name="ellipsis-horizontal" slot="end" style="color:#e7113a;" (click)="presentActionSheet(card , i)"></ion-icon>
+            </ion-item>
+            <ion-icon *ngIf="showlikeicon==true" name='heart' class="likeicon"></ion-icon>
+			
+            <img *ngIf="card.media.length == 1 && card.media[0].type=='1'; else singleImage" #singleImage style="height:260px;width:100%;object-fit:cover;object-position:top;" src="{{postUrl}}{{card.media[0].uploads}}" (dblclick)="like_post(card)">
+			          <video *ngIf="card.media.length == 1 && card.media[0].type=='2'"  style="height:260px;width:100%;object-fit:cover;object-position:top;" class="stories_video"   muted >
+            <source [src]="card.media[0].url" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+					  		   <img *ngIf="card.media[0].type=='2'" (click)="playVdo(card.media[0].url)" style="object-fit:cover;width:45%;position:absolute;left:25%;top:20%;z-index:+999999;" src="assets/images/vdobtn.png">
+            <ion-slides pager="true" [options]="slideOpts" *ngIf="card.media.length > 1">
+                <ion-slide *ngFor="let item of card.media; let m = index">
+                    <img *ngIf="item.type=='1'" style="height:260px;width:100%;object-fit:cover;object-position:top;" src="{{postUrl}}{{item.uploads}}" (dblclick)="like_post(card)">
+					 <video *ngIf="item.type=='2'"  style="height:260px;width:100%;object-fit:cover;object-position:top;" class="stories_video"  muted >
+            <source [src]="item.media.url" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+		  <img *ngIf="item.type=='2'" (click)="playVdo(item.media.url)" style="object-fit:cover;width:45%;position:absolute;left:25%;top:20%;z-index:+999999;" src="assets/images/vdobtn.png">
+                </ion-slide>
+            </ion-slides>
+            <!-- <ion-card-content (click)="imageTapped(card)">
+      <p>{{card.postText}}</p>
+   </ion-card-content>-->
+            <ion-row>
+                <ion-col size="2" style="text-align:left;padding-left:5%;">
+
+                    <ion-icon *ngIf="card.user_liked=='like'" name='heart' (click)="like_post(card)" style="font-size: 25px;
+color: #fe1743;"></ion-icon>
+                    <ion-icon *ngIf="card.user_liked!='like'" name='heart-outline' (click)="like_post(card)" style="font-size: 25px;
+color: #fe1743;"></ion-icon>
+
+                </ion-col>
+                <ion-col size="8">
+                    <span *ngIf="card.likedBy.length==1" (click)="show_liked_by(card)">
+      
+       Liked By {{card.likedBy[0].username}} 
+      </span>
+                    <span *ngIf="card.likedBy.length>1" (click)="show_liked_by(card)">
+      
+       Liked By {{card.likedBy[0].username}} and {{card.likedBy.length - 1}} Others.
+      </span>
+                </ion-col>
+                <ion-col size="2" style="text-align: right;
+padding-right: 5%;
+font-size: 20px;">
+
+                    <ion-icon *ngIf="card.is_saved==0" name='bookmark-outline' (click)="save_post(card)" style="font-size: 25px;
+color: #fe1743;"></ion-icon>
+                    <ion-icon *ngIf="card.is_saved==1" name='bookmark' (click)="unsave_post(card)" style="font-size: 25px;
+color: #fe1743;"></ion-icon>
+
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="4" style="text-align:left;padding-left:5%;">
+                    <span (click)="show_all_likes(card.post_id);">
+        {{card.like}} Likes
+      </span>
+                </ion-col>
+                <ion-col size="8" style="text-align:right;padding-right: 5%;">
+                    <span *ngIf="card.comment.length>0" (click)="show_all_comment(card, card.comment)">
+       View all {{ card.comment.length }} comments
+		</span>
+
+                    <span *ngIf="card.comment.length==0" (click)="show_all_comment(card, card.comment)">
+       No Comments
+		</span>
+                </ion-col>
+
+            </ion-row>
+            <p style="text-align:left;margin:10px 15px -10px 15px;line-height:20px;"><b>{{card.user_name}} </b> {{card.description}}</p>
+            <ion-card-content style="padding:15px 15px 15px 0px !important;">
+                <form [formGroup]="form" (submit)="onSubmit(card.post_id, i)">
+                    <ion-item style="padding:0px !important;">
+                        <ion-avatar item-start>
+                            <img src="{{dp}}" (click)="show_profile_2(card)">
+                        </ion-avatar>
+
+                        <ion-input type="text" required formControlName="comment" placeholder="Comment..." class="comment-input"></ion-input>
+
+
+
+                        <ion-button color="#fff" type="submit" [disabled]="form.invalid" slot="end" style="position: absolute;
+	left: 75%;font-size:15px;z-index: +99999;--box-shadow: none !important;">
+                            <ion-icon name="send" style="color: #fe1743;
+z-index: +999999999;"></ion-icon>
+                        </ion-button>
+                    </ion-item>
+                </form>
+            </ion-card-content>
+        </ion-card>
+
+    </ion-grid>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" [disabled]="numTimesLeft <= 0">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <ion-grid>
+    </ion-grid>
+
+</ion-content>

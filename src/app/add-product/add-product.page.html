@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+     <ion-buttons slot="start">
+      <ion-back-button style="color:#fff;" defaultHref="members/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Product</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+<ion-grid>
+		<form [formGroup]="addform" (submit)="onSubmitAdd()">
+            <ion-item>
+				<ion-label position="floating">Category</ion-label>
+				<ion-select placeholder="Select Category" formControlName="category_id">
+					<div *ngFor="let field of categories" >
+						<ion-select-option value="{{field.id}}">{{field.name}}</ion-select-option>
+					</div>
+				</ion-select>
+			</ion-item>
+			<ion-item>
+				<ion-label position="floating">Product Name</ion-label>
+				
+				<ion-input type="text"  formControlName="product_name"></ion-input>
+				<input type="hidden" formControlName="user_id" ngModel="{{user.user_id}}" />
+			</ion-item>
+			<ion-item>
+				<ion-label position="floating">Product Details</ion-label>
+				
+				<ion-textarea formControlName="description" ></ion-textarea>
+			</ion-item>
+			
+            <ion-item>
+				
+				<ion-checkbox style="margin:10px;" (ionChange)="addValue($event)" required formControlName="is_discount" color="primary"> </ion-checkbox> Discount & Sale 
+				
+			</ion-item>
+			<ion-item id="discount" style="display:none;">
+				<ion-label position="floating">Discount Offer</ion-label>
+				
+				<ion-input type="text"  formControlName="discount"></ion-input>
+				
+			</ion-item>
+			<ion-item>
+				<ion-label position="floating">Price</ion-label>
+				
+				<ion-input type="number"  formControlName="total"></ion-input>
+				
+			</ion-item>
+			
+ <input type="file" id="image" formControlName="image" name="image" (change)="onFileSelected($event)" hidden>
+<ion-button shape="round" class="btnclass" expand="full" (click)="selectImage('image')" color="primary"  ><ion-icon name="image"></ion-icon> Upload Media</ion-button>
+		
+			<ion-button type="submit" shape="round" class="btnclass" expand="full" color="primary"  [disabled]="addform.invalid">Add</ion-button>
+			<ion-row style="height: 50px;"></ion-row>
+			
+		</form>
+	</ion-grid>  
+	
+
+</ion-content>
+
+
+

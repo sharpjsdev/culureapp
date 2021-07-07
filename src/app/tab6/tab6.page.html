@@ -1,0 +1,129 @@
+
+	<ion-content padding class="transparent-header">
+  <ion-header>
+    <ion-navbar>
+	
+ <ion-icon name="arrow-back" class="topmenu bb" (click)="backtohome()" slot="start"></ion-icon>
+ <ion-icon name="create" class="topmenu pp" (click)="selectImage('cover_image')" slot="end"></ion-icon>
+    </ion-navbar>
+  </ion-header>
+  <div *ngIf="model.cover_image" id="profile-bg" [ngStyle]="{'background-image': 'url(' +coverUrl+ model.cover_image +')'}"></div>
+  <div *ngIf="!model.cover_image" id="profile-bg" [ngStyle]="{'background-color': '#fe1743'}"></div>
+  <div id="content">
+  <ion-button class="edit-btn" fill="outline" routerLink="/edit-profile">Edit Profile</ion-button>
+    <div id="profile-info" padding>
+	
+      <img *ngIf="model.profile_pic" id="profile-image" [src]="model.profile_pic" (click)="selectImage('profile_pic')">
+      <img *ngIf="!model.profile_pic" id="profile-image" [src]="defaultImage" (click)="selectImage('profile_pic')">
+      <h3 id="profile-name">{{model.name}}</h3>
+	   <p class="profile-description">{{model.username}}</p>
+	   
+	   <p class="profile-description" style="color:#fe1743;" (click)="presentAlertPrompt()" >Verify Your Account?</p>
+ <input class="fileUpload" type="file" id="uploadDocs" (change)="uploadDoc($event)"
+            accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf" #uploadDocs  hidden />
+	   
+      <p *ngIf="model.profession" class="profile-description"><ion-icon name="navigate" style="margin-right:5px;"></ion-icon> {{model.profession}}</p>
+	        <p *ngIf="model.website" class="profile-description"><ion-icon name="earth" style="margin-right:5px;"></ion-icon> {{model.website}}</p>
+      <p *ngIf="model.city" class="profile-description"><ion-icon name="location" style="margin-right:5px;"></ion-icon> {{model.city}}</p>
+
+
+    </div>
+    <hr/>
+    <ion-row class="profile-numbers">
+      <ion-col col-4 routerLink="/followers">
+        <p>Followers</p>
+        <span>{{followers.length}}</span>
+      </ion-col>
+      <ion-col col-4 routerLink="/following">
+        <p>Following</p>
+        <span>{{following.length}}</span>
+      </ion-col>
+      <ion-col col-4 routerLink="/my-post">
+        <p>Posts</p>
+        <span>{{posts.length}}</span>
+      </ion-col>
+    </ion-row>
+   
+ </div>
+    <ion-fab style="top:90%;" vertical="center" horizontal="end" slot="fixed" id="shop-button1">
+ <ion-icon (click)="hideButton1()" style="font-size: 30px;
+color: #fe1743;
+position: absolute;
+left: -35%;
+bottom: 75%;" name="close-circle-outline"></ion-icon>
+    <ion-fab-button routerLink="/add-product">
+     <ion-icon name="bag-add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab style="top: 85%;
+margin: -10px;
+height: 90px;
+background: #fe1743;
+vertical-align: ;
+width: 25px;
+border-radius: 15px 0px 0px 15px;display:none;" vertical="center" horizontal="end" slot="fixed" id="hide-button1" (click)="showButton1()">
+
+     <ion-icon style="vertical-align: middle;
+position: absolute;
+top: 40%;
+left: 25%;
+color: #fff;" name="chevron-back-outline"></ion-icon>
+ 
+  </ion-fab>
+   <ion-toolbar color="white"> 
+  <ion-segment (ionChange)="segmentChanged($event)" value="0" [(ngModel)]="segment" color="primary"> 
+  <ion-segment-button value="0"> 
+  <ion-label>Products</ion-label> 
+
+  </ion-segment-button> 
+  <ion-segment-button value="1"> 
+  <ion-label>Photos</ion-label> 
+
+  </ion-segment-button> 
+  <ion-segment-button value="2"> 
+  <ion-label>Videos</ion-label> 
+
+  </ion-segment-button> 
+  </ion-segment> 
+  </ion-toolbar> 
+  <ion-slides #slides (ionSlideDidChange)="slideChanged()" scrollbar="true"> 
+  <ion-slide>
+	  <ion-grid style="height:610px;">
+       <ion-row>
+		  <ion-col size="4" *ngFor="let post of products; let s = index" class="ion-no-padding">
+		<div style="height:110px !important;" >
+       <img style="object-fit:cover;width:100%;height:100%;" src="{{productUrl}}{{post.image}}" ionImgViewer  scheme="dark" [slideOptions]="{ allowTouchMove:false}">
+		 </div>
+        </ion-col>
+     </ion-row>
+</ion-grid>
+	  
+	  </ion-slide> 
+  <ion-slide>
+	  	  <ion-grid>
+       <ion-row>
+		  <ion-col size="4" *ngFor="let image of images; let s = index" class="ion-no-padding">
+      <div style="height:110px !important;" >
+       <img ionImgViewer  scheme="dark" [slideOptions]="{ allowTouchMove:false}" style="object-fit:cover;width:100%;height:100%;" src="{{imageUrl}}{{image.uploads}}">
+		 </div>
+        </ion-col>
+     </ion-row>
+</ion-grid>
+	  </ion-slide> 
+  <ion-slide>
+  <ion-grid>
+       <ion-row>
+		  <ion-col size="4" *ngFor="let vdo of vedios; let s = index" class="ion-no-padding">
+      <div style="height:110px !important;" >
+      	   <video *ngIf="vdo.type=='2'"  style="height:100%;width:100%;object-fit:cover;object-position:top;" class="stories_video" autoplay [muted]="true" >
+            <source src="{{imageUrl}}{{vdo.uploads}}" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+		  		   <img *ngIf="vdo.type=='2'" (click)="playVdo(vdo.uploads)" style="object-fit:cover;width:35%;position:absolute;left:25%;top:20%;z-index:+999999;" src="assets/images/vdobtn.png">
+		 </div>
+        </ion-col>
+     </ion-row>
+</ion-grid></ion-slide> 
+ 
+  </ion-slides> 
+</ion-content>

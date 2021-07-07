@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+   <ion-buttons slot="start">
+      <ion-back-button style="color:#fff;" defaultHref="members/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="color:#fff;" class="capitalize">
+Chats
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content [fullscreen]="true">
+
+  <ion-segment [(ngModel)]="segment">
+    
+    <ion-segment-button  class="capitalize" value="I Liked">
+    Recent Chats
+    </ion-segment-button>
+    <ion-segment-button  class="capitalize" value="Liked by">
+     Followers & Following
+    </ion-segment-button> 
+
+
+  </ion-segment>
+
+	   
+  <div [ngSwitch]="segment">
+    <ion-grid *ngSwitchCase="'I Liked'">
+    	  <ng-container *ngFor="let item of model">
+
+  <ion-item (click)="show_chat(item)"  *ngIf="user.user_id!=item.id">
+      <ion-avatar item-start style="height:40px;width:40px;" >
+		  <img src="{{ imageUrl }}{{ item.thumb_image }}" >
+      </ion-avatar>
+	  	  <ion-label style="margin:5px;">
+      <h2 style="font-size:12px;">{{item.username}}</h2>
+      <p style="font-size:11px;"><ion-icon name="checkmark" class="check-icon"></ion-icon> {{item.message}}</p>
+	   </ion-label>	 
+
+      <ion-label style="text-align:right;" slot="end">
+	   <h2 style="font-size:12px;">{{item.date}}</h2>
+      <p *ngIf="item.msg_count>0" class="num-buble">{{item.msg_count}}</p>
+    
+	   </ion-label>
+
+</ion-item>
+ </ng-container>
+    </ion-grid>
+  
+    <ion-grid *ngSwitchCase="'Liked by'">
+
+    	  <ng-container *ngFor="let usr of contacts">
+
+  <ion-item  *ngIf="user.user_id!=usr.id" (click)="show_chat(usr)">
+      <ion-avatar item-start style="height:40px;width:40px;" >
+		  <img src="{{ imageUrl }}{{ usr.image.thumb_image }}" >
+      </ion-avatar>
+	  	  <ion-label style="margin:5px;">
+      <h2 style="font-size:12px;">{{usr.username}}</h2>
+      <p style="font-size:11px;">{{usr.name}}</p>
+	   </ion-label>
+
+</ion-item>
+		  </ng-container>
+    </ion-grid>
+	
+  </div>
+	
+
+
+</ion-content>

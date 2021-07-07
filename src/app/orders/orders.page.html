@@ -1,0 +1,70 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+   <ion-buttons slot="start">
+      <ion-back-button style="color:#fff;" defaultHref="members/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="color:#fff;" class="capitalize">
+Orders
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content [fullscreen]="true">
+
+  <ion-segment [(ngModel)]="segment">
+    
+    <ion-segment-button  class="capitalize" value="I Liked">
+     Orders
+    </ion-segment-button>
+    <ion-segment-button  class="capitalize" value="Liked by">
+     Received
+    </ion-segment-button> 
+
+
+  </ion-segment>
+
+	   
+  <div [ngSwitch]="segment">
+    <ion-grid *ngSwitchCase="'I Liked'">
+    	  <ng-container *ngFor="let usr of orders">
+
+  <ion-item (click)="showDetails(usr)">
+      <ion-avatar item-start style="height:40px;width:40px;" >
+		  <img src="{{ imageUrl }}{{ usr.profile_pic.thumb_image }}" >
+      </ion-avatar>
+	  	  <ion-label style="margin:5px;">
+      <h2 style="font-size:12px;">Seller : {{usr.username}}</h2>
+      <p style="font-size:11px;">Transaction ID : {{usr.txn_id}}</p>
+      <p style="font-size:11px;">Date :  {{usr.date}}</p>
+	   </ion-label>
+
+</ion-item>
+ </ng-container>
+    </ion-grid>
+  
+    <ion-grid *ngSwitchCase="'Liked by'">
+
+    	  <ng-container *ngFor="let usr of received">
+
+  <ion-item (click)="showDetails(usr)">
+      <ion-avatar item-start style="height:40px;width:40px;" >
+		  <img src="{{ imageUrl }}{{ usr.profile_pic.thumb_image }}" >
+      </ion-avatar>
+	  	  <ion-label style="margin:5px;">
+      <h2 style="font-size:12px;">Buyer : {{usr.username}}</h2>
+      <p style="font-size:11px;">Transaction ID : {{usr.txn_id}}</p>
+      <p style="font-size:11px;">Date :  {{usr.date}}</p>
+	   </ion-label>
+
+</ion-item>
+		  </ng-container>
+    </ion-grid>
+	
+  </div>
+	
+
+
+</ion-content>

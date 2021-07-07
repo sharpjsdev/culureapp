@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+    <app-header></app-header>
+</ion-header>
+
+<ion-content style="text-align:center" padding>
+
+    <ion-grid *ngIf="currentBlog" style="padding-inline-end:0px;padding-inline-start:0px;">
+        <ion-card style="margin-inline-end:0px;margin-inline-start:0px;">
+            <ion-item>
+                <ion-avatar item-start style="height:50px;width:50px;">
+                    <img src="{{imageUrl}}{{currentBlog.profile_pic.thumb_image}}" (click)="show_profile_2(currentBlog)">
+                </ion-avatar>
+                <ion-label style="margin:15px;">
+                    <h2 (click)="show_profile_2(currentBlog)">{{currentBlog.name}}</h2>
+				<p>{{currentBlog.created_at}} -  {{currentBlog.category}}</p>
+                </ion-label>
+
+            </ion-item>
+            <ion-row>
+                <ion-col size="12" style="text-align:left;padding-left:5%;"> 
+       <div style="font-size:16px;" [innerHTML]="currentBlog.heading">
+              </div>
+      
+                </ion-col>
+
+            </ion-row>
+			
+            <img *ngIf="currentBlog.image" #singleImage style="height:260px;width:100%;object-fit:cover;object-position:top;" src="{{blogUrl}}{{currentBlog.image}}" />
+
+			
+
+            <!-- <ion-card-content (click)="imageTapped(card)">
+      <p>{{card.postText}}</p>
+   </ion-card-content>-->
+            <ion-row>
+                <ion-col size="12" style="text-align:left;padding-left:5%;"> 
+       <div [innerHTML]="currentBlog.body">
+              </div>
+      
+                </ion-col>
+
+            </ion-row>
+ </ion-card>
+ </ion-grid>
+
+
+</ion-content>

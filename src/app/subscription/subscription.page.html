@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+   <ion-buttons slot="start">
+           <ion-back-button defaultHref="/members/tab1"></ion-back-button>
+
+    </ion-buttons>
+    <ion-title>Subscription</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light" style="text-align:center;"> 
+
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+
+        <div class="modal-body modelBody1" id="modelBody1" style="overflow-y: hidden;">
+          <section class="pricing py-3">
+            <div class="container">
+              <div class="row">
+                <!-- Free Tier -->
+                <div class="col-lg-12">
+                  <div class="card mb-3 mb-lg-0">
+                    <div class="card-body">
+                      <h5 class="card-title text-muted text-uppercase text-center">
+                        Plan
+                      </h5>
+                      <h6 class="card-price text-center">
+                        ${{ finalAmount }}<span class="period">/month</span>
+                      </h6>
+                      <hr />
+                      <ul class="fa-ul">
+                        <li>
+                          <span class="fa-li"><i class="fa fa-check"></i></span>Upload Unlimited Private Content
+                        </li>
+                        <li>
+                          <span class="fa-li"><i class="fa fa-check"></i></span>1 Month Validity
+                        </li>
+                        <li>
+                          <span class="fa-li"><i class="fa fa-check"></i></span>Unlimited Public Projects
+                        </li>
+                      </ul>
+                      <!-- <a class="btn btn-block btn-primary text-uppercase" (click)="doPayment()">Buy</a> -->
+
+                      <div id="paypal-checkout-btn" class="text-center"></div>
+                    </div>
+                  </div>
+
+                  <div class="payOther text-center" (click)="payOther()">
+                    <a class="text-white" *ngIf="subEndDate != ''">
+                      Subscription expires on {{ subEndDate }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="modal-footer"></div>
+      </div>
+    </div>
+
+ </ion-content>  

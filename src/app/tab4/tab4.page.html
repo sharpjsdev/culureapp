@@ -1,0 +1,78 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+   <ion-buttons slot="start">
+      <ion-back-button style="color:#fff;" defaultHref="members/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="color:#fff;" class="capitalize">
+Liked
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content [fullscreen]="true">
+
+  <ion-segment [(ngModel)]="segment">
+    
+    <ion-segment-button  class="capitalize" value="I Liked">
+     I Liked
+    </ion-segment-button>
+    <ion-segment-button  class="capitalize" value="Liked by">
+     Liked by
+    </ion-segment-button> 
+
+
+  </ion-segment>
+
+	   
+  <div [ngSwitch]="segment">
+    <ion-grid *ngSwitchCase="'I Liked'">
+    	  <ng-container *ngFor="let usr of iLiked">
+
+  <ion-item  *ngIf="user.user_id!=usr.id">
+      <ion-avatar item-start style="height:40px;width:40px;" >
+		  <img src="{{ imageUrl }}{{ usr.profile_pic.thumb_image }}" >
+      </ion-avatar>
+	  	  <ion-label style="margin:5px;">
+      <h2 style="font-size:12px;">{{usr.username}}</h2>
+      <p style="font-size:11px;">You liked {{usr.username}}'s photo</p>
+	   </ion-label>
+  <ion-button *ngIf="usr.follow_status==0" (click)="confirmFollowUser(usr)" slot="end">
+    {{usr.text}}
+  </ion-button>
+  <ion-button *ngIf="usr.follow_status==1" (click)="confirmFollowUser(usr)" slot="end">
+    {{usr.text}}
+  </ion-button>
+</ion-item>
+ </ng-container>
+    </ion-grid>
+  
+    <ion-grid *ngSwitchCase="'Liked by'">
+
+    	  <ng-container *ngFor="let usr of likedBy">
+
+  <ion-item  *ngIf="user.user_id!=usr.id">
+      <ion-avatar item-start style="height:40px;width:40px;" >
+		  <img src="{{ imageUrl }}{{ usr.profile_pic.thumb_image }}" >
+      </ion-avatar>
+	  	  <ion-label style="margin:5px;">
+      <h2 style="font-size:12px;">{{usr.username}}</h2>
+      <p style="font-size:11px;">{{usr.username}} liked your photo</p>
+	   </ion-label>
+  <ion-button *ngIf="usr.follow_status==0" (click)="confirmFollowUser(usr)" slot="end">
+    {{usr.text}}
+  </ion-button>
+  <ion-button *ngIf="usr.follow_status==1" (click)="confirmFollowUser(usr)" slot="end">
+    {{usr.text}}
+  </ion-button>
+</ion-item>
+		  </ng-container>
+    </ion-grid>
+	
+  </div>
+	
+
+
+</ion-content>

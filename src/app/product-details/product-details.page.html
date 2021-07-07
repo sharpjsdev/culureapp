@@ -1,0 +1,114 @@
+<ion-header [translucent]="true" style="background-color:#ffffff;">
+  <ion-toolbar color="white" style="background-color:#ffffff;" >
+   <ion-buttons slot="start">
+      <ion-back-button style="color:#4C4A48;" defaultHref="members/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="color:#4C4A48;" class="capitalize">
+     {{product.product_name}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+      <ion-slides pager="true" [options]="slideOpts" style="width:100%;">
+		
+                <ion-slide *ngIf="product.image">
+                    <img ionImgViewer [slideOptions]="{ allowTouchMove:false}" scheme="dark" class="img-slide" src="{{productUrl}}{{product.image}}" />
+                </ion-slide>
+				<ion-slide *ngIf="!product.image">
+                    <img ionImgViewer [slideOptions]="{ allowTouchMove:false}" scheme="dark" class="img-slide" [src]="defaultImage" />
+                </ion-slide>
+				
+            </ion-slides>
+    <ion-row>
+      <ion-col size="12">
+	  <ion-grid class="card card-md">
+
+
+	            <ion-item lines="none">
+                <ion-avatar item-start style="height:35px;width:35px;">
+                    <img src="{{imageUrl}}{{product.profile_pic.thumb_image}}" (click)="show_profile_2(card)">
+                </ion-avatar>
+                <ion-label style="margin:15px;">
+                    <h4 (click)="show_profile_2(product)">{{product.name}}</h4>
+                    
+                </ion-label>
+
+            </ion-item>
+
+    <ion-row>
+	<ion-col>
+  <ion-label style="font-size:18px;font-weight:bold;"> {{product.product_name}}</ion-label>
+	</ion-col>
+	</ion-row>
+    <ion-row>
+	<ion-col size="6" style="text-align:center;">
+<table width="100%" border="1">
+	<tr>
+	    <td style="width:30%;text-align:center;" (click)="removeQty()"><ion-icon name="remove-outline" ></ion-icon></td>
+		<td style="width:30%;text-align:center;">{{qty}}</td>
+		<td style="width:30%;text-align:center;" (click)="addQty()"><ion-icon name="add-outline" ></ion-icon></td>
+		</tr>
+	</table>
+	</ion-col>
+	<ion-col size="6" style="text-align:center;">
+   <ion-label style="font-size:18px;font-weight:bold;">${{price}}</ion-label>
+	</ion-col>
+	</ion-row>
+	            <ion-row>
+                <ion-col size="6" style="text-align:left;padding-left:5%;"> 
+<ion-button shape="round" class="btnclass" expand="full" color="primary" (click)="addCartItem(product,qty)"> <ion-icon style="color:#fff;margin:10px;" name="cart-outline"></ion-icon>Add to Cart</ion-button>
+                </ion-col> 
+				<ion-col size="6" style="text-align:left;padding-left:0%;"> 
+<ion-button shape="round" class="btnclass" expand="full" color="primary" routerLink="/cart">View Cart <ion-icon style="color:#fff;margin:10px;" name="arrow-forward"></ion-icon></ion-button>
+                </ion-col>
+
+            </ion-row>
+			    <ion-row>
+	<ion-col>
+  <ion-label style="font-size:15px;font-weight:bold;"> {{product.description}}</ion-label>
+	</ion-col>
+	</ion-row>
+				    <ion-row>
+	<ion-col>
+ <table width="100%" border="0">
+	<tr>
+	    <td style="width:50%;text-align:left;padding-left:5px;">is Discount ?</td>
+		<td style="width:50%;text-align:left;padding-left:5px;"><span *ngIf="product.is_discount==1"> Yes</span> <span *ngIf="product.is_discount==0">No</span> </td>
+	
+		</tr>
+			<tr>
+	    <td style="width:50%;text-align:left;padding-left:5px;">Discount Value</td>
+		<td style="width:50%;text-align:left;padding-left:5px;"><span *ngIf="product.discount"> ${{product.discount}}</span> <span *ngIf="!product.discount"> N.A. </span></td>
+	
+		</tr>	
+			<tr>
+	    <td style="width:50%;text-align:left;padding-left:5px;">Average Rating</td>
+		<td style="width:50%;text-align:left;padding-left:5px;"><span *ngIf="product.averageRating"> {{product.averageRating}}</span> <span *ngIf="!product.averageRating">N.A. </span></td>
+	
+		</tr>
+	</table>
+	</ion-col>
+	</ion-row>
+ </ion-grid>
+	 
+	    
+	  </ion-col>
+  </ion-row>
+	
+				 <ion-grid>
+				 <ion-row>
+                <ion-col size="6" style="text-align:left;padding-left:5%;"> 
+<form #form="ngForm">
+  <bar-rating name="rating" [(ngModel)]="rating" [max]="5" required ></bar-rating>
+</form>
+                </ion-col> 
+				<ion-col size="6" style="text-align:left;padding-left:5%;"> 
+<ion-button shape="round" class="btnclass" expand="full" color="primary" (click)="addReview(rating)"> <ion-icon style="color:#fff;margin:10px;" name="star-outline"></ion-icon>Add Rating</ion-button>
+                </ion-col>
+				 </ion-row>
+</ion-grid>
+           
+   <ion-row style="height: 50px;"></ion-row>
+</ion-content>

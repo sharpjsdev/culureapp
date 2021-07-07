@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar>
+        <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Signup</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+    <div class="start_logo">
+      <div class="center_div"><img src="assets/images/logo.png"></div>
+    </div>
+
+<ion-content padding>
+	
+	<div class="ion-padding" >
+  <form [formGroup]="form" (submit)="onSubmit()">
+  
+      <ion-item>
+      <ion-label position="floating">Name</ion-label>
+      <ion-input type="text" required formControlName="name"></ion-input>
+	   <ion-icon name="person-outline" slot="start"></ion-icon>
+    </ion-item>
+	
+    <ion-item>
+      <ion-label position="floating">Email</ion-label>
+      <ion-input type="email" required formControlName="email"></ion-input>
+	   <ion-icon name="mail-outline" slot="start"></ion-icon>
+	  
+    </ion-item>
+	
+	      <ion-item>
+      <ion-label position="floating">Contact Number</ion-label>
+      <ion-input type="text" required formControlName="mobile"></ion-input>
+		  <ion-icon name="phone-portrait-outline" slot="start"></ion-icon>
+    </ion-item>
+
+  <ion-item>
+    <ion-radio-group required formControlName="gender">
+      <ion-row>
+
+            <ion-col>
+                   <ion-label>Male</ion-label>
+      <ion-radio value="male"></ion-radio>
+					
+            </ion-col>
+
+            <ion-col>
+                    <ion-label>Female</ion-label>
+      <ion-radio value="female"></ion-radio>
+            </ion-col>
+            <ion-col>
+                   <ion-label>Other</ion-label>
+                   <ion-radio value="other"></ion-radio>
+            </ion-col>
+		
+	  </ion-row>	  </ion-radio-group>
+	<ion-icon name="male-female-outline" slot="start"></ion-icon>
+  </ion-item>
+  
+   <ion-item>
+      <ion-label position="floating">Username</ion-label>
+      <ion-input type="text" required formControlName="username"></ion-input>
+	   <ion-icon name="person-outline" slot="start"></ion-icon>
+    </ion-item>
+  
+   <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" required formControlName="password"></ion-input>
+	   <ion-icon name="key" slot="start"></ion-icon>
+    </ion-item>
+	
+	   <ion-item>
+      <ion-label position="floating"></ion-label>
+      <ion-input type="date" required formControlName="birthday"></ion-input>
+	   <ion-icon name="calendar-outline" slot="start"></ion-icon>
+    </ion-item>
+	
+	
+ <ion-button type="submit" class="ion-margin-top" expand="block" [disabled]="form.invalid">Register</ion-button>
+  </form>
+	</div>
+</ion-content>

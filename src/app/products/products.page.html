@@ -1,0 +1,80 @@
+<ion-header [translucent]="true">
+   <app-shop-header></app-shop-header>
+</ion-header>
+<ion-content style="text-align:center" padding >
+
+    <ion-grid *ngFor="let card of products; let i = index" style="padding-inline-end:0px;padding-inline-start:0px;">
+        <ion-card style="margin-inline-end:0px;margin-inline-start:0px;">
+            <ion-item>
+                <ion-avatar item-start style="height:50px;width:50px;">
+                    <img src="{{imageUrl}}{{card.profile_pic.thumb_image}}" (click)="show_profile_2(card)">
+                </ion-avatar>
+                <ion-label style="margin:15px;">
+                    <h2 (click)="show_profile_2(card)">{{card.name}}</h2>
+                    <p>{{card.created_at}}</p>
+                </ion-label>
+
+            </ion-item>
+            <ion-row (click)="showProduct(card)">
+                <ion-col size="12" style="text-align:left;padding-left:5%;"> 
+       <div style="text-align:left;font-size:16px;" [innerHTML]="card.heading">
+              </div>
+      
+                </ion-col>
+
+            </ion-row>
+			<ion-icon _ngcontent-voo-c144="" name="heart-outline" style="font-size: 25px; color: #fe1743;
+background: #0f020282;
+height: 30px;
+width: 30px;
+padding: 5px;
+border-radius: 50%;
+position: absolute;
+left: 85%;
+top: 20%;" ng-reflect-name="heart-outline" role="img" class="md hydrated" aria-label="heart outline" (click)="addWishlistItem(card)" *ngIf="card.is_favourite==false"></ion-icon>
+			<ion-icon _ngcontent-voo-c144="" name="heart" style="font-size: 25px; color: #fe1743;
+background: #0f020282;
+height: 30px;
+width: 30px;
+padding: 5px;
+border-radius: 50%;
+position: absolute;
+left: 85%;
+top: 20%;" ng-reflect-name="heart-outline" role="img" class="md hydrated" aria-label="heart" (click)="removeWishlistItem(card)" *ngIf="card.is_favourite==true"></ion-icon>
+
+            <img (click)="showProduct(card)" *ngIf="card.image" #singleImage style="height:260px;width:100%;object-fit:cover;object-position:top;" src="{{productUrl}}{{card.image}}" />
+
+			<div style="text-align:left;font-size:16px;text-align: left;
+font-size: 16px;
+margin: 0px;
+background: #000;
+position: absolute;
+bottom: 10%;
+width: 100%;
+padding: 10px;
+color: #fff;">
+	<div style="width:70%;float:left;">{{card.product_name}}</div>    <div style="width:20%;float:right;">${{card.total}}</div> 
+              </div>
+
+            <!-- <ion-card-content (click)="imageTapped(card)">
+      <p>{{card.postText}}</p>
+   </ion-card-content>-->
+            <ion-row>
+                <ion-col size="6" style="text-align:left;padding-left:5%;"> 
+<bar-rating [rate]="card.averageRating" [max]="5" readOnly='true' ></bar-rating>
+                </ion-col> 
+				<ion-col size="6" style="text-align:left;padding-left:5%;"> 
+<ion-button shape="round" class="btnclass" expand="full" color="primary" (click)="addCartItem(card)"> <ion-icon style="color:#fff;margin:10px;" name="cart-outline"></ion-icon>Add to Cart</ion-button>
+                </ion-col>
+
+            </ion-row>
+ </ion-card>
+ </ion-grid>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" [disabled]="numTimesLeft <= 0">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <ion-grid>
+    </ion-grid>
+
+</ion-content>

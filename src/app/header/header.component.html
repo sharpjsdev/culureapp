@@ -1,0 +1,22 @@
+    <ion-toolbar color="white">
+        <ion-img slot="start" src="../assets/images/logo.png" class="logoimg"></ion-img>
+		
+        <ion-buttons routerLink="/image-post" slot="end" color="white">
+            <ion-icon style="color:#fe1743;" name="images" class="topmenu"></ion-icon>
+        </ion-buttons>
+
+
+        <ion-buttons routerLink="/video-post" slot="end">
+            <ion-icon style="color:#fe1743;" name="play-circle" class="topmenu"></ion-icon>
+        </ion-buttons>
+
+        <ion-buttons routerLink="/chat" slot="end">
+            <ion-icon style="color:#fe1743;" name="paper-plane" class="topmenu"></ion-icon>
+			 <span *ngIf="oldCount > 0" class="customBadge">{{ oldCount }}</span>
+        </ion-buttons>
+
+        <ion-buttons slot="end">
+            <ion-menu-button style="color:#fe1743;"></ion-menu-button>
+        </ion-buttons>
+
+    </ion-toolbar>

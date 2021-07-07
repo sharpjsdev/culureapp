@@ -1,0 +1,128 @@
+<ion-content padding class="transparent-header">
+  <ion-header>
+    <ion-navbar>
+	
+ <ion-icon name="arrow-back" class="topmenu bb" (click)="backtohome()" slot="start"></ion-icon>
+
+    </ion-navbar>
+  </ion-header>
+  <div id="profile-bg" [ngStyle]="{'background-image': 'url(' +coverUrl+ model.cover_image +')'}"></div>
+  <div id="content">
+    <div id="profile-info" padding>
+      <img id="profile-image" [src]="model.profile_pic">
+      <h3 id="profile-name">{{model.name}}</h3>
+	   <p class="profile-description">{{model.username}}</p>
+
+	   
+      <p *ngIf="model.profession" class="profile-description"><ion-icon name="navigate" style="margin-right:5px;"></ion-icon> {{model.profession}}</p>
+	        <p *ngIf="model.website" class="profile-description"><ion-icon name="earth" style="margin-right:5px;"></ion-icon> {{model.website}}</p>
+      <p *ngIf="model.city" class="profile-description"><ion-icon name="location" style="margin-right:5px;"></ion-icon> {{model.city}}</p>
+
+    </div>
+    <hr/>
+	    <ion-row class="profile-numbers">
+      <ion-col col-4>
+        <p>Followers</p>
+        <span>{{countFollowers}}</span>
+      </ion-col>
+      <ion-col col-4>
+        <p>Following</p>
+        <span>{{countFollowing}}</span>
+      </ion-col>
+      <ion-col col-4>
+        <p>Posts</p>
+        <span>{{posts.length}}</span>
+      </ion-col>
+    </ion-row>
+		    <ion-row class="profile-numbers">
+			      <ion-col col-6>
+  <ion-button style="width:100%;" (click)="show_products(model)">
+  View Shop
+  </ion-button>
+      </ion-col>
+      <ion-col col-6>
+  <ion-button style="width:100%;" routerLink="/subscription" >
+    Subscribe
+  </ion-button>
+      </ion-col>
+
+    </ion-row>
+	    <ion-row class="profile-numbers">
+      <ion-col col-4>
+  <ion-button (click)="confirmFollowUser()" >
+    {{text}}
+  </ion-button>
+      </ion-col>
+	        <ion-col col-4>
+  <ion-button (click)="show_chat(model)">
+  Message
+  </ion-button>
+      </ion-col>
+      <ion-col col-4>
+  <ion-button routerLink="/" >
+    Tagged
+  </ion-button>
+      </ion-col> 
+
+    </ion-row>
+
+   
+ </div>
+ 
+   <ion-toolbar color="white"> 
+  <ion-segment (ionChange)="segmentChanged($event)" value="0" [(ngModel)]="segment" color="primary"> 
+  <ion-segment-button value="0"> 
+  <ion-label>Photos</ion-label> 
+
+  </ion-segment-button> 
+  <ion-segment-button value="1"> 
+  <ion-label>Videos</ion-label> 
+
+  </ion-segment-button> 
+  <ion-segment-button value="2"> 
+  <ion-label>Private</ion-label> 
+
+  </ion-segment-button> 
+  </ion-segment> 
+  </ion-toolbar> 
+  <ion-slides #slides (ionSlideDidChange)="slideChanged()" scrollbar="true"> 
+
+  <ion-slide>
+	  	  <ion-grid>
+       <ion-row>
+		  <ion-col size="4" *ngFor="let image of images; let s = index" class="ion-no-padding">
+      <div style="height:110px !important;" >
+       <img ionImgViewer  scheme="dark" [slideOptions]="{ allowTouchMove:false}" style="object-fit:cover;width:100%;height:100%;" src="{{imageUrl}}{{image.uploads}}">
+		 </div>
+        </ion-col>
+     </ion-row>
+</ion-grid>
+	  </ion-slide> 
+  <ion-slide>
+  <ion-grid>
+       <ion-row>
+		  <ion-col size="4" *ngFor="let vdo of vedios; let s = index" class="ion-no-padding">
+      <div style="height:110px !important;" >
+      	   <video *ngIf="vdo.type=='2'"  style="height:100%;width:100%;object-fit:cover;object-position:top;" class="stories_video" controls muted >
+            <source src="{{imageUrl}}{{vdo.uploads}}" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+		 </div>
+        </ion-col>
+     </ion-row>
+</ion-grid></ion-slide> 
+  <ion-slide>
+	  <ion-grid style="height:610px;">
+       <ion-row>
+		  <ion-col size="4" class="ion-no-padding">
+		<div style="height:110px !important;" >
+<h2>Private Content</h2>
+		 </div>
+        </ion-col>
+     </ion-row>
+</ion-grid>
+	  
+	  </ion-slide> 
+ 
+  </ion-slides> 
+</ion-content>

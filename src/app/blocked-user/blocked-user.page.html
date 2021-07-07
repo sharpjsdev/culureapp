@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+   <ion-buttons slot="start">
+           <ion-back-button defaultHref="/members/tab1"></ion-back-button>
+
+</ion-buttons>
+	 <ion-title> Blocked Users</ion-title>
+	</ion-toolbar>
+</ion-header>
+<ion-content color="white" padding fullscreen >
+<ion-grid  *ngIf="model.blocked_users">	
+
+  <ion-list *ngFor="let user of model.blocked_users">
+	  <ion-list-header>
+      <ion-avatar item-start (click)="show_profile(user)" >
+        <img src="{{ imageUrl }}{{ user.profile_picture.thumb_image }}" >
+      </ion-avatar>
+	  	  <ion-label style="margin:15px;" (click)="show_profile(user)">
+			  <h2 (click)="show_profile(user)">{{user.username.name}}</h2>
+      <p> {{user.username.username}} </p>
+	   </ion-label>
+  <ion-button (click)="unblock_user(user.blocked_user,user.id)">Unblock</ion-button>
+    </ion-list-header>
+  </ion-list>
+</ion-grid>
+  </ion-content> 
+
+	

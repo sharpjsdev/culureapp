@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+     <ion-buttons slot="start">
+      <ion-back-button style="color:#fff;" defaultHref="members/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create Blog</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+		  <ion-grid style="min-height:400px;height:auto;">
+  <form [formGroup]="form" (submit)="onSubmit()">
+    <ion-item>
+      <ion-label position="floating">Heading</ion-label>
+	  
+      <ion-input ngModel type="text" required formControlName="heading"></ion-input>
+	  <p *ngIf="form.controls.heading.errors && form.controls.heading.dirty" class="danger" padding>Heading is Required. </p>
+	 <input formControlName="user_id" type="hidden" ngModel="{{user.user_id}}" />
+	 <input formControlName="image" type="hidden" ngModel="{{blog.image}}" />
+	 <input formControlName="thumb_image" type="hidden" ngModel="{{blog.thumb_image}}" />
+    </ion-item>
+  	 <ion-item>
+      <ion-label position="floating">Category</ion-label>
+	  
+	    <ion-select placeholder="Select" formControlName="category" [(ngModel)]="blog.category" >
+ <div *ngFor="let cat of categoryArray">
+              <ion-select-option value="{{cat}}">{{cat}}
+              </ion-select-option>
+            </div>
+    </ion-select>
+    </ion-item>
+
+   <quill-editor style="height:100%;" formControlName="body" [(ngModel)]="blog.body"></quill-editor>
+
+ <input type="file" id="image" formControlName="image" name="image" (change)="onFileSelected($event)" hidden>
+<ion-button shape="round" class="btnclass" expand="full" (click)="trigger()" color="primary"  >Upload Media</ion-button>
+    <ion-button type="submit" shape="round" class="btnclass" expand="full" color="primary"  [disabled]="form.invalid">Publish</ion-button>
+  </form>
+</ion-grid>
+
+
+</ion-content>
+

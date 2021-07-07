@@ -1,0 +1,169 @@
+<ion-header [translucent]="true" style="background-color:#ffffff;">
+  <ion-toolbar color="white" style="background-color:#ffffff;" >
+   <ion-buttons slot="start">
+      <ion-back-button style="color:#4C4A48;" defaultHref="members/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="color:#4C4A48;" class="capitalize">
+    Order Details
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+    <ion-row>
+      <ion-col size="12">
+	  <ion-grid class="card card-md">
+
+
+	            <ion-item lines="none">
+                <ion-avatar item-start style="height:35px;width:35px;">
+                    <img src="{{imageUrl}}{{order.profile_pic.thumb_image}}" (click)="show_profile_2(order)">
+                </ion-avatar>
+                <ion-label style="margin:15px;">
+                    <h4 (click)="show_profile_2(order)">{{order.uname}}</h4>
+                    <h4 *ngIf="user.user_id==order.seller_id">Buyer</h4>
+                    <h4 *ngIf="user.user_id!=order.seller_id">Seller</h4>
+                    
+                </ion-label>
+            </ion-item>
+
+    <ion-row *ngIf="user.user_id==order.seller_id" >
+	
+	<ion-col>
+  <ion-label style="font-size:18px;font-weight:bold;">Update Status</ion-label>
+  
+  <ion-button *ngIf="order.status==0" shape="round" class="btnclass" expand="full" color="warning" (click)="updateStatus(order,1)"> <ion-icon style="color:#000;margin:10px;" name="cart-outline"></ion-icon>In Progress</ion-button>
+  
+  <ion-button *ngIf="order.status==1" shape="round" class="btnclass" expand="full" color="success" (click)="updateStatus(order,0)"> <ion-icon style="color:#fff;margin:10px;" name="cart-outline"></ion-icon>Completed</ion-button>
+  
+	</ion-col>
+	</ion-row> 
+	
+	<ion-row *ngIf="user.user_id!=order.seller_id" >
+	
+	<ion-col>
+  <ion-label style="font-size:18px;font-weight:bold;"> Order Status</ion-label>
+  
+  <ion-button *ngIf="order.status==0" shape="round" class="btnclass" expand="full" color="warning"> <ion-icon style="color:#000;margin:10px;" name="cart-outline"></ion-icon>In Progress</ion-button>
+  
+  <ion-button *ngIf="order.status==1" shape="round" class="btnclass" expand="full" color="success"> <ion-icon style="color:#fff;margin:10px;" name="cart-outline"></ion-icon>Completed</ion-button>
+  
+	</ion-col>
+	</ion-row>
+    
+	<ion-row>
+	
+	<ion-col>
+  <ion-label style="font-size:18px;font-weight:bold;"> Shipping Details</ion-label>
+	</ion-col>
+	</ion-row>
+
+ <ion-row>
+	<ion-col>
+ <table width="100%" border="0" style="padding:0px;font-size:12px;line-height:15px;">
+	<tr>
+	    <td style="width:30%;text-align:left;padding-left:5px;">Name :</td>
+		<td style="width:70%;text-align:left;padding-left:5px;"><span> {{order.name}}</span></td>
+	
+		</tr>
+			<tr> 
+	    <td style="width:30%;text-align:left;padding-left:5px;">Address :</td>
+		<td style="width:70%;text-align:left;padding-left:5px;"><span> {{order.address}}</span></td>
+	
+		</tr>			<tr>
+	    <td style="width:30%;text-align:left;padding-left:5px;">State :</td>
+		<td style="width:70%;text-align:left;padding-left:5px;"><span> {{order.state}}</span></td>
+	
+		</tr>			<tr>
+	    <td style="width:30%;text-align:left;padding-left:5px;">City :</td>
+		<td style="width:70%;text-align:left;padding-left:5px;"><span> {{order.city}}</span></td>
+	
+		</tr>			<tr>
+	    <td style="width:30%;text-align:left;padding-left:5px;">Email :</td>
+		<td style="width:70%;text-align:left;padding-left:5px;"><span> {{order.email}}</span></td>
+	
+		</tr>			<tr>
+	    <td style="width:30%;text-align:left;padding-left:5px;">Phone :</td>
+		<td style="width:70%;text-align:left;padding-left:5px;"><span> {{order.mobile}}</span></td>
+	
+		</tr>
+	</table>
+	</ion-col>
+	</ion-row>
+	    <ion-row>
+	<ion-col>
+		<ion-label style="font-size:18px;font-weight:bold;"> Payment Details </ion-label>
+					 <table width="100%" border="0" style="padding:0px;font-size:12px;line-height:10px;">
+
+			<tr>
+	    <td style="width:30%;text-align:left;padding-left:5px;">Payment ID :</td>
+		<td style="width:70%;text-align:left;padding-left:5px;"><span> {{order.txn_id}}</span></td>
+	
+		</tr>			<tr>
+	    <td style="width:30%;text-align:left;padding-left:5px;">Date :</td>
+		<td style="width:70%;text-align:left;padding-left:5px;"><span> {{order.date}}</span></td>
+			</tr>
+			<tr>
+	    <td style="width:30%;text-align:left;padding-left:5px;">Order Status :</td>
+		<td style="width:70%;text-align:left;padding-left:5px;"><span *ngIf="order.status==0"> In Progress</span><span *ngIf="order.status==1"> Completed</span></td>
+			</tr>	
+	</table>
+	</ion-col>
+	</ion-row>
+	      <ion-row>
+	<ion-col>
+  <ion-label style="font-size:18px;font-weight:bold;"> Product Details</ion-label>
+	</ion-col>
+	</ion-row>
+ 	    <ion-row>
+      <ion-col size="12">
+	  <ion-grid class="card card-md">
+
+    <ng-container *ngFor="let item of cart_items">
+    <ion-row>
+	<ion-col>
+  <ion-label style="font-size:18px;font-weight:bold;"> {{item.product.product_name}}</ion-label>
+	</ion-col>
+	</ion-row>
+    <ion-row>
+		<ion-col size="2" style="text-align:left;height:50px;">
+  <img style="height:100%;width:100%;object-fit:cover;" src="{{productUrl}}{{item.product.image}}" />
+	</ion-col>
+	<ion-col size="5" style="text-align:left;">
+     <lable>Qty :{{item.quantity}} </lable><br/>
+	<lable>Price : ${{item.product.total}}</lable>
+	</ion-col>
+	<ion-col size="5" style="text-align:right;">
+   <ion-label style="font-size:18px;font-weight:bold;">${{item.product.total*item.quantity}}</ion-label>
+	</ion-col>	
+	
+	</ion-row>
+	</ng-container>
+	    <ion-row *ngIf="cart!=''">
+		<ion-col size="2" style="text-align:left;">
+
+	</ion-col>
+	<ion-col size="5" style="text-align:right;">
+	Total : 
+	</ion-col>
+	<ion-col size="5" style="text-align:right;">
+   <ion-label style="font-size:18px;font-weight:bold;">${{cart.cart_amount}}</ion-label>
+	</ion-col>
+
+	</ion-row>
+
+  
+ </ion-grid>
+	 
+	    
+	  </ion-col>
+  </ion-row>
+ 	
+ </ion-grid>
+
+	  </ion-col>
+  </ion-row>
+
+   <ion-row style="height: 50px;"></ion-row>
+</ion-content>

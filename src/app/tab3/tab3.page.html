@@ -1,0 +1,101 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+          <ion-buttons slot="start">
+      <ion-back-button defaultHref="/members/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title>
+     New Post
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen padding>
+
+
+
+	
+	<div class="ion-padding" style="text-align:center;" >
+	<br/>
+	<br/>
+	<br/>
+  <form [formGroup]="form" (submit)="onSubmit()">
+  
+ 
+  <img *ngIf="croppedImagepath" style="width:100%;" [src]="croppedImagepath"  />
+          <ion-grid *ngIf="rawfilestoshow" class="suggest">
+            <ion-row>
+
+                <ion-col size="12">
+
+                    <ion-slides pager="false" [options]="slideOptsuggested">
+                        <ion-slide class="ion-slide-follow" *ngFor="let img of rawfilestoshow; let i = index">
+                            <ion-card style="height: 100%;width:100%; display: flex; align-items: center; justify-content: center;">
+
+                                <ion-anchor (click)="removeSuggested(i);" class="dismiss">
+                                    <ion-icon name="close-sharp" slot="end"></ion-icon>
+                                </ion-anchor>
+
+                                <ion-card-content no-padding>
+                                   
+                                        <img  src="{{ img }}" alt="">
+
+                                   
+    
+                                </ion-card-content>
+                            </ion-card>
+
+                        </ion-slide>
+                    </ion-slides>
+
+                </ion-col>
+
+            </ion-row>
+        </ion-grid>
+   
+  
+ <ion-icon *ngIf="!croppedImagepath" name="cloud-upload" style="font-size:120px;color:#fe1743;"></ion-icon><br/>
+ 
+ <input type="file" id="postuploader" (change)="onFileSelected1($event)" hidden>
+<ion-button (click)="selectImage()" color="primary"  >Upload Media</ion-button>
+  	 <ion-item>
+      <ion-label position="floating">Category</ion-label>
+	  
+	    <ion-select placeholder="Select" formControlName="category" >
+ <div *ngFor="let cat of categoryArray">
+              <ion-select-option value="{{cat}}">{{cat}}
+              </ion-select-option>
+            </div>
+    </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Add Caption...</ion-label>
+	  
+      <ion-input ngModel type="text" formControlName="caption"></ion-input>
+	   
+    </ion-item> 
+	<ion-item>
+     
+	  
+<tag-input ngModel formControlName="tags"
+           [onlyFromAutocomplete]="true">
+    <tag-input-dropdown [showDropdownIfEmpty]="true"
+                        [autocompleteItems]="contacts"
+						[identifyBy]="'user_id'" [displayBy]="'name'">
+						 <ng-template let-item="item" let-index="index">
+             {{ item.name }}
+        </ng-template>
+    </tag-input-dropdown>
+</tag-input>
+	   
+    </ion-item>
+  
+
+  
+    <ion-button type="submit" expand="full" color="primary"  [disabled]="form.invalid">Post</ion-button>
+  </form>
+
+
+
+
+	</div>
+</ion-content>

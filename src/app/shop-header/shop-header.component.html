@@ -1,0 +1,22 @@
+    <ion-toolbar color="white">
+          <ion-buttons slot="start">
+      <ion-back-button style="color:#fe1743;" routerLink="/members/tab1"></ion-back-button>
+    </ion-buttons>
+		
+
+    <ion-button (click)="addForm()" slot="end" shape="round" class="btnclass" expand="full" color="primary"> <ion-icon style="color:#fff;margin:10px;" name="add-circle"></ion-icon>Add Product</ion-button>
+
+        <ion-buttons routerLink="/members/tab1" slot="end">
+            <ion-icon style="color:#fe1743;" name="home" class="topmenu"></ion-icon>
+        </ion-buttons>
+
+        <ion-buttons routerLink="/cart" slot="end">
+            <ion-icon style="color:#fe1743;" name="cart" class="topmenu"></ion-icon>
+			 <span *ngIf="global.state['cartCount'] > 0" class="customBadge">{{global.state['cartCount']}}</span>
+        </ion-buttons>
+
+        <ion-buttons slot="end">
+            <ion-menu-button style="color:#fe1743;"></ion-menu-button>
+        </ion-buttons>
+
+    </ion-toolbar>

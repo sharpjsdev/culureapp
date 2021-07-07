@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+     <ion-buttons slot="start">
+      <ion-back-button style="color:#fff;" defaultHref="members/tab6"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!model.username" padding class="transparent-header">
+</ion-content>	
+	<ion-content *ngIf="model.username" padding class="transparent-header">
+	
+		  	 <ion-grid>
+  <form [formGroup]="editform" (submit)="onSubmitEdit()">
+
+     <ion-item>
+      <ion-label position="floating">Name</ion-label>
+	  
+      <ion-input class="capitalize" ngModel="{{model.name}}" type="text"  formControlName="name"></ion-input>
+	<input type="hidden" formControlName="auth_id" ngModel="{{model.id}}" />
+	 
+    </ion-item>
+     <ion-item>
+      <ion-label position="floating">Username</ion-label>
+	  
+      <ion-input ngModel="{{model.username}}" type="text"  formControlName="username"></ion-input>
+	
+    </ion-item>
+	 <ion-item>
+      <ion-label position="floating">Email</ion-label>
+	  
+      <ion-input ngModel="{{model.email}}" type="email"  formControlName="email"></ion-input>
+	
+    </ion-item>
+ <ion-item>
+      <ion-label position="floating">Mobile Number</ion-label>
+	  
+      <ion-input ngModel="{{model.mobile}}" type="text"  formControlName="mobile"></ion-input>
+	
+    </ion-item>
+	 <ion-item>
+      <ion-label position="floating">Date of Birth</ion-label>
+	  
+      <ion-input ngModel="{{model.birthday}}" type="date"  formControlName="birthday"></ion-input>
+	
+    </ion-item>
+		    <ion-item>
+      <ion-label position="floating">Gender</ion-label>
+
+    <ion-select placeholder="Select Gender" formControlName="gender"  [(ngModel)]="model.gender" >
+      <ion-select-option value="male">Male</ion-select-option>
+      <ion-select-option value="female">Female</ion-select-option>
+      <ion-select-option value="other">Other</ion-select-option>
+    </ion-select>
+    </ion-item>
+ <ion-item>
+      <ion-label position="floating">City</ion-label>
+	  
+      <ion-input ngModel="{{model.city}}" type="text"  formControlName="city"></ion-input>
+	
+    </ion-item>
+	 <ion-item>
+      <ion-label position="floating">Profession</ion-label>
+	  
+      <ion-input ngModel="{{model.profession}}" type="text"  formControlName="profession"></ion-input>
+	
+    </ion-item>
+	 <ion-item>
+      <ion-label position="floating">Website</ion-label>
+	  
+      <ion-input ngModel="{{model.website}}" type="text"  formControlName="website"></ion-input>
+	
+    </ion-item>	
+	 <ion-item>
+      <ion-label position="floating">Subscription Price</ion-label>
+	  
+      <ion-input ngModel="{{model.subscription_price}}" type="number"  formControlName="subscription_price"></ion-input>
+	
+    </ion-item>
+    <ion-button type="submit" shape="round" class="btnclass" expand="full" color="primary"  [disabled]="editform.invalid">Update</ion-button>
+	<ion-row style="height: 50px;"></ion-row>
+
+  </form>
+            </ion-grid> 	  
+
+</ion-content>
+

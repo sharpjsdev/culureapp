@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+     <ion-buttons slot="start">
+      <ion-back-button style="color:#fff;" defaultHref="members/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Wishlist</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+    <ion-row>
+      <ion-col size="12">
+	  <ion-grid class="card card-md">
+
+    <ng-container *ngFor="let item of wishlist_items">
+
+    <ion-row>
+		<ion-col size="3" style="text-align:left;">
+  <img style="height:60px;width:60px;object-fit:cover;" src="{{productUrl}}{{item.product.image}}" />
+	</ion-col>
+	<ion-col size="7" style="text-align:left;">
+  <ion-label style="font-size:18px;font-weight:bold;"> {{item.product.product_name}}</ion-label><br/>
+	Price : ${{item.product.total}}
+	</ion-col>
+	
+	<ion-col size="2" style="text-align:right;">
+   <ion-icon style="color:red;" name="trash-outline" (click)="removeItem(item)"></ion-icon>
+	</ion-col>
+	</ion-row>
+	</ng-container>
+
+	            <ion-row *ngIf="wishlist==''">
+				                <ion-col size="12" style="text-align:center;padding-left:5%;"> 
+Wishlist is Empty!
+                </ion-col> 
+                <ion-col size="12" style="text-align:center;padding-left:5%;"> 
+<ion-button shape="round" class="btnclass" expand="full" color="primary" routerLink="/products"> <ion-icon style="color:#fff;margin:10px;" name="cart-outline"></ion-icon>Shop Now</ion-button>
+                </ion-col> 
+
+            </ion-row>
+
+       
+ </ion-grid>
+	 
+	    
+	  </ion-col>
+  </ion-row>
+ 	
+   <ion-row style="height: 50px;"></ion-row>
+</ion-content>
+

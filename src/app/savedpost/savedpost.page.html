@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar>
+   <ion-buttons slot="start">
+           <ion-back-button defaultHref="/members/tab1"></ion-back-button>
+
+    </ion-buttons>
+    <ion-title>Saved Posts</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light"> 
+  <ion-toolbar color="white"> 
+  <ion-segment (ionChange)="segmentChanged($event)" value="0" [(ngModel)]="segment" color="primary"> 
+  <ion-segment-button value="0"> 
+  <ion-label>All</ion-label> 
+  <ion-icon name="image"></ion-icon> 
+  </ion-segment-button> 
+  <ion-segment-button value="1"> 
+  <ion-label>Images</ion-label> 
+  <ion-icon name="images"></ion-icon> 
+  </ion-segment-button> 
+  <ion-segment-button value="2"> 
+  <ion-label>Videos</ion-label> 
+  <ion-icon name="videocam"></ion-icon> 
+  </ion-segment-button> 
+  </ion-segment> 
+  </ion-toolbar> 
+  <ion-slides #slides (ionSlideDidChange)="slideChanged()" scrollbar="true"> 
+  <ion-slide>
+	  <ion-grid style="height:610px;">
+       <ion-row>
+		  <ion-col size="4" *ngFor="let post of media; let s = index" class="ion-no-padding">
+		<div style="height:110px !important;" >
+       <img *ngIf="post.post_type=='1'" style="object-fit:cover;width:100%;height:100%;" src="{{imageUrl}}{{post.post_url}}" ionImgViewer  scheme="dark" [slideOptions]="{ allowTouchMove:false}">
+	   <video *ngIf="post.post_type=='2'"  style="height:100%;width:100%;object-fit:cover;object-position:top;" class="stories_video" controls muted >
+            <source src="{{imageUrl}}{{post.post_url}}" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+		 </div>
+        </ion-col>
+     </ion-row>
+</ion-grid>
+	  
+	  </ion-slide> 
+  <ion-slide>
+	  	  <ion-grid>
+       <ion-row>
+		  <ion-col size="4" *ngFor="let image of images; let s = index" class="ion-no-padding">
+      <div style="height:110px !important;" >
+       <img ionImgViewer  scheme="dark" [slideOptions]="{ allowTouchMove:false}" style="object-fit:cover;width:100%;height:100%;" src="{{imageUrl}}{{image.post_url}}">
+		 </div>
+        </ion-col>
+     </ion-row>
+</ion-grid>
+	  </ion-slide> 
+  <ion-slide>
+  <ion-grid>
+       <ion-row>
+		  <ion-col size="4" *ngFor="let vdo of vedios; let s = index" class="ion-no-padding">
+      <div style="height:110px !important;" >
+      	   <video *ngIf="vdo.post_type=='2'"  style="height:100%;width:100%;object-fit:cover;object-position:top;" class="stories_video" controls muted >
+            <source src="{{imageUrl}}{{vdo.post_url}}" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+		 </div>
+        </ion-col>
+     </ion-row>
+</ion-grid></ion-slide> 
+  </ion-slides> 
+ </ion-content>  

@@ -1,0 +1,328 @@
+<ion-header [translucent]="true" *ngIf="show==1">
+   <app-header></app-header>
+</ion-header>
+<ion-header [translucent]="true" *ngIf="show==2">
+    <ion-toolbar>
+      <ion-title>{{story[0].user_name}}</ion-title>
+        <ion-buttons slot="end" (click)="hide_story()">
+            <ion-icon style="color:white;"  name="close" class="topmenu"></ion-icon>
+        </ion-buttons>
+
+
+    </ion-toolbar>
+	<ion-content padding fullscreen>
+    <ion-grid style="margin-top:25%;" *ngIf="story.type=='image'">
+        <img [src]="story.imageurl" />
+    </ion-grid>
+	        <ion-grid  class="suggest">
+      
+            <ion-row>
+
+                <ion-col size="12">
+
+                    <ion-slides #mySlider class="slides" (ionSlidesDidLoad)="slidesDidLoad(mySlider)" pager="true" [options]="slideOptsProgressbar" speed="500">
+                        <ion-slide *ngFor="let s of story; let j = index">
+                            <ion-card style="height: 100%;width:100%; display: flex; align-items: center; justify-content: center;">
+
+         
+                                <ion-card-content *ngIf="s.type=='image'">
+                                  
+                                        <img *ngIf="s.story != null" #image src="{{ storyUrl }}{{ s.thumb_image }}" alt="" ionImgViewer  scheme="dark" [slideOptions]="{ allowTouchMove:false}">
+
+                                
+                                    <ion-label>
+                                    
+                                        <p class="sug-sug"></p>
+                                    </ion-label>
+               
+                                </ion-card-content>
+								<ion-card-content *ngIf="s.type=='video'">
+								 <video controls autoplay muted (click)="show_story1(sty)" style="width:100%;margin: 0 auto;" class="stories_video">
+            <source [src]="s.url" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+							</ion-card-content>
+							
+                            </ion-card>
+
+                        </ion-slide>
+                    </ion-slides>
+
+                </ion-col>
+
+            </ion-row>
+        </ion-grid>
+</ion-content>
+</ion-header>
+<ion-header [translucent]="true" *ngIf="show==3">
+    <ion-toolbar>
+
+        <ion-buttons slot="start" color="white" (click)="hide_story()">
+            <ion-icon style="color:#fff;" name="chevron-back" class="topmenu"></ion-icon>
+        </ion-buttons>
+		  <ion-title>See All Likes</ion-title>
+
+
+    </ion-toolbar>
+
+    <ion-content padding fullscreen>
+        <ion-list *ngFor="let likes of model.all_likes_of_post; let lk = index">
+            <ion-list-header (click)="showProfile(likes.profile_pic.user_id)">
+                <ion-avatar item-start>
+                    <img src="{{ imageUrl }}{{ likes.profile_pic.thumb_image }}">
+                </ion-avatar>
+                <ion-label style="margin:15px;">
+                    <h2>{{ likes.username.username }}</h2>
+                    <p>{{ likes.username.username }} like this post.</p>
+                </ion-label>
+
+            </ion-list-header>
+        </ion-list>
+    </ion-content>
+
+</ion-header>
+<ion-header [translucent]="true" *ngIf="show==4">
+    <ion-toolbar>
+
+        <ion-buttons slot="start" (click)="hide_story()">
+            <ion-icon style="color:#fff;" name="chevron-back" class="topmenu"></ion-icon>
+        </ion-buttons>
+		<ion-title>See All {{ sortedComment.length }} Comments</ion-title>
+       
+
+    </ion-toolbar>
+
+    <ion-content padding fullscreen>
+        <ion-list *ngFor="let comment of sortedComment; let cm = index">
+            <ion-list-header (click)="showProfile(comment.profile_pic.user_id)">
+                <ion-avatar item-start style="margin-bottom: 10%;">
+                    <img src="{{ imageUrl }}{{ comment.profile_pic.thumb_image }}">
+                </ion-avatar>
+                <ion-label style="margin:15px;">
+                    <h2>{{ comment.username }}</h2>
+                    <p>{{ comment.created_date | timeAgo }}</p>
+                    <span>{{ comment.comment }}</span>
+                </ion-label>
+
+            </ion-list-header>
+        </ion-list>
+    </ion-content>
+
+</ion-header>
+
+<ion-content style="text-align:center" padding *ngIf="show==1">
+	<ion-list mode="ios" lines="none">
+	<ion-item no-lines>
+    <ion-grid>
+
+        <ion-row class="forecast_container">
+            <ion-col size="2.5" style="margin-left:10px;text-align:center;">
+                <ion-avatar item-start style="height:64px;width:64px;margin: 0 auto;border: 1px solid beige;">
+				<div *ngIf="mystoriestype=='video'">
+                          <video (click)="show_story1(mstories[0])" style="height:64px;width:64px;margin: 0 auto;border: 1px solid beige;border-radius: 50%;
+object-fit: cover;" class="stories_video" >
+            <source [src]="mystoriesthumb" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+				</div>
+				<div *ngIf="mystoriestype=='image'">
+                    <img  *ngIf="mystories.length>0" [src]="mystoriesthumb" (click)="show_story1(mstories[0])" style="height:64px;width:64px;margin: 0 auto;border: 1px solid beige;border-radius: 50%;
+object-fit: cover;" >
+				</div>
+                    <img *ngIf="mystories.length==0" (click)="selectImage('story')" [src]="dp">
+<ion-icon name="add-circle" class="addicon" (click)="selectImage('story')"></ion-icon>
+                    <input type="file" id="uploader" (change)="onFileSelected($event)" hidden>
+                </ion-avatar>
+                <ion-label *ngIf="mystories.length > 0" style="font-size:10px;" >Your Story </ion-label>
+			<ion-label *ngIf="mystories.length==0" style="font-size:10px;"> Add Story </ion-label>
+				
+				
+            </ion-col>
+            <ion-col size="2.5" style="margin-left:10px;" *ngFor="let sty of allstories; let l = index" >
+			<div *ngIf="sty[0].type=='image'">
+                <ion-avatar (click)="show_story1(sty)" item-start style="height:64px;width:64px;margin: 0 auto;border: 1px solid beige;">
+                    <img src="{{storyUrl}}{{sty[0].thumb_image}}">
+
+                </ion-avatar>
+                <ion-label style="font-size:10px;">{{sty[0].user_name | slice:0:12}}</ion-label>
+			</div>
+			<div *ngIf="sty[0].type=='video'">
+          <video (click)="show_story1(sty)" style="height:64px;width:64px;margin: 0 auto;border: 1px solid beige;border-radius: 50%;
+object-fit: cover;" class="stories_video" id="video_{{ sty[0].id }}">
+            <source [src]="sty[0].url" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+                <ion-label style="font-size:10px;">{{sty[0].user_name | slice:0:12}}</ion-label>
+			</div>
+            </ion-col>
+        </ion-row>
+		
+    </ion-grid>
+	</ion-item>
+	</ion-list>
+ <!-- fab placed to the (vertical) center and end -->
+  <ion-fab style="top:90%;" vertical="center" horizontal="end" slot="fixed" id="shop-button">
+ <ion-icon (click)="hideButton()" style="font-size: 30px;
+color: #fe1743;
+position: absolute;
+left: -35%;
+bottom: 75%;" name="close-circle-outline"></ion-icon>
+    <ion-fab-button routerLink="/products">
+     <ion-icon name="bag-handle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-fab style="top: 85%;
+margin: -10px;
+height: 90px;
+background: #fe1743;
+vertical-align: ;
+width: 25px;
+border-radius: 15px 0px 0px 15px;display:none;" vertical="center" horizontal="end" slot="fixed" id="hide-button" (click)="showButton()">
+
+     <ion-icon style="vertical-align: middle;
+position: absolute;
+top: 40%;
+left: 25%;
+color: #fff;" name="chevron-back-outline"></ion-icon>
+ 
+  </ion-fab>
+    <ion-grid *ngFor="let card of sortedpost; let i = index" style="padding-inline-end:0px;padding-inline-start:0px;">
+        <ion-card style="margin-inline-end:0px;margin-inline-start:0px;">
+            <ion-item>
+                <ion-avatar item-start style="height:50px;width:50px;">
+                    <img src="{{imageUrl}}{{card.profile_pic.thumb_image}}" (click)="show_profile_2(card)">
+                </ion-avatar>
+                <ion-label style="margin:15px;">
+                    <h2 (click)="show_profile_2(card)">{{card.user_name}} <img *ngIf="card.vstatus == '1'" class="verifyImg" style="width:15px;" src="assets/images/verified.png" /></h2>
+                    <p>{{card.post_created_date}}</p>
+                </ion-label>
+                <ion-icon name="ellipsis-horizontal" slot="end" style="color:#e7113a;" (click)="presentActionSheet(card , i)"></ion-icon>
+            </ion-item>
+            <ion-icon *ngIf="showlikeicon==true" name='heart' class="likeicon"></ion-icon>
+			
+            <img *ngIf="card.media.length == 1 && card.media[0].type=='1'; else singleImage" #singleImage style="height:260px;width:100%;object-fit:cover;object-position:top;" src="{{postUrl}}{{card.media[0].uploads}}" (dblclick)="like_post(card)">
+			          <video *ngIf="card.media.length == 1 && card.media[0].type=='2'"  style="height:260px;width:100%;object-fit:cover;object-position:top;" class="stories_video" controls  muted >
+            <source [src]="card.media[0].url" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+			
+            <ion-slides pager="true" [options]="slideOpts" *ngIf="card.media.length > 1">
+                <ion-slide *ngFor="let item of card.media; let m = index">
+                    <img *ngIf="item.type=='1'" style="height:260px;width:100%;object-fit:cover;object-position:top;" src="{{postUrl}}{{item.uploads}}" (dblclick)="like_post(card)">
+					 <video *ngIf="item.type=='2'"  style="height:260px;width:100%;object-fit:cover;object-position:top;" class="stories_video" controls muted >
+            <source [src]="item.media.url" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+                </ion-slide>
+            </ion-slides>
+            <!-- <ion-card-content (click)="imageTapped(card)">
+      <p>{{card.postText}}</p>
+   </ion-card-content>-->
+            <ion-row>
+                <ion-col size="2" style="text-align:left;padding-left:5%;">
+
+                    <ion-icon *ngIf="card.user_liked=='like'" name='heart' (click)="like_post(card)" style="font-size: 25px;
+color: #fe1743;"></ion-icon>
+                    <ion-icon *ngIf="card.user_liked!='like'" name='heart-outline' (click)="like_post(card)" style="font-size: 25px;
+color: #fe1743;"></ion-icon>
+
+                </ion-col>
+                <ion-col size="8">
+                    <span *ngIf="card.likedBy.length==1" (click)="show_liked_by(card)">
+      
+       Liked By {{card.likedBy[0].username}} 
+      </span>
+                    <span *ngIf="card.likedBy.length>1" (click)="show_liked_by(card)">
+      
+       Liked By {{card.likedBy[0].username}} and {{card.likedBy.length - 1}} Others.
+      </span>
+                </ion-col>
+                <ion-col size="2" style="text-align: right;
+padding-right: 5%;
+font-size: 20px;">
+
+                    <ion-icon *ngIf="card.is_saved==0" name='bookmark-outline' (click)="save_post(card)" style="font-size: 25px;
+color: #fe1743;"></ion-icon>
+                    <ion-icon *ngIf="card.is_saved==1" name='bookmark' (click)="unsave_post(card)" style="font-size: 25px;
+color: #fe1743;"></ion-icon>
+
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="4" style="text-align:left;padding-left:5%;">
+                    <span (click)="show_all_likes(card.post_id);">
+        {{card.like}} Likes
+      </span>
+                </ion-col>
+                <ion-col size="8" style="text-align:right;padding-right: 5%;">
+                    <span *ngIf="card.comment.length>0" (click)="show_all_comment(card, card.comment)">
+       View all {{ card.comment.length }} comments
+		</span>
+
+                    <span *ngIf="card.comment.length==0" (click)="show_all_comment(card, card.comment)">
+       No Comments
+		</span>
+                </ion-col>
+
+            </ion-row>
+            <p style="text-align:left;margin:10px 15px -10px 15px;line-height:20px;"><b>{{card.user_name}} </b> {{card.description}}</p>
+            <ion-card-content style="padding:15px 15px 15px 0px !important;">
+                <form [formGroup]="form" (submit)="onSubmit(card.post_id, i)">
+                    <ion-item style="padding:0px !important;">
+                        <ion-avatar item-start>
+                            <img src="{{dp}}" (click)="show_profile_2(card)">
+                        </ion-avatar>
+
+                        <ion-input type="text" required formControlName="comment" placeholder="Comment..." class="comment-input"></ion-input>
+
+
+
+                        <ion-button color="#fff" type="submit" [disabled]="form.invalid" slot="end" style="position: absolute;
+	left: 75%;font-size:15px;z-index: +99999;--box-shadow: none !important;">
+                            <ion-icon name="send" style="color: #fe1743;
+z-index: +999999999;"></ion-icon>
+                        </ion-button>
+                    </ion-item>
+                </form>
+            </ion-card-content>
+        </ion-card>
+<ion-grid *ngIf="i==1" class="suggest">
+          <ion-label>  <p style="text-align:left;">Suggested for You</p></ion-label>
+            <ion-row class="forecast_container">
+
+                        <ion-col  class="ion-slide-follow" *ngFor="let s of suggestion; let j = index">
+                            <ion-card style="height: 200px;width:135px; display: flex; align-items: center; justify-content: center;">
+
+                                <ion-anchor (click)="removeSuggested(j);" class="dismiss">
+                                    <ion-icon name="close-sharp" slot="end"></ion-icon>
+                                </ion-anchor>
+
+                                <ion-card-content>
+                                    <ion-avatar class="avatar">
+                                        <img *ngIf="s.image != null" #image src="{{ imageUrl }}{{ s.image.thumb_image }}" alt="">
+
+                                    </ion-avatar>
+                                    <ion-label>
+                                        <h2 class="sug-name">{{s.name | slice:0:15}}</h2>
+                                        <p class="sug-sug">Suggest for You</p>
+                                    </ion-label>
+                                    <ion-label>
+                                        <ion-button small (click)="follow_user(s,j)">Follow</ion-button>
+                                    </ion-label>
+                                </ion-card-content>
+                            </ion-card>
+
+                        </ion-col>
+                
+            </ion-row>
+        </ion-grid>
+   
+    </ion-grid>
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)" [disabled]="numTimesLeft <= 0">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+    <ion-grid>
+    </ion-grid>
+
+</ion-content>

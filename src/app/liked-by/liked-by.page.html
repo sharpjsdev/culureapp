@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+   <ion-buttons slot="start">
+           <ion-back-button defaultHref="/members/tab1"></ion-back-button>
+
+</ion-buttons>
+	 <ion-title> Liked by</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content color="white" padding fullscreen >
+<ion-grid  *ngIf="users">	
+
+  <ion-list *ngFor="let user of users">
+	  <ion-list-header (click)="show_profile(user)">
+      <ion-avatar item-start >
+        <img src="{{ imageUrl }}{{ user.thumb_image }}" >
+      </ion-avatar>
+	  	  <ion-label style="margin:15px;">
+      <h2 (click)="show_profile(user)">{{user.username}}</h2>
+      <p> {{user.username}} liked the post</p>
+	   </ion-label>
+  
+    </ion-list-header>
+  </ion-list>
+</ion-grid>
+  </ion-content> 
+
+	

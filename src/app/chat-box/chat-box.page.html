@@ -1,0 +1,78 @@
+<ion-header [translucent]="true">
+	<ion-toolbar color="white">
+
+		<ion-item>
+				<ion-buttons slot="start">
+			<ion-back-button style="color:#e3595f;" defaultHref="members/tab1"></ion-back-button>
+		</ion-buttons>
+  <ion-avatar slot="start">
+    <img *ngIf="chatter.thumb_image" src="{{imageUrl}}{{chatter.thumb_image}}">
+    <img *ngIf="!chatter.thumb_image" src="{{imageUrl}}{{chatter.image.thumb_image}}">
+  </ion-avatar>
+  <ion-label>{{chatter.username}}</ion-label>
+</ion-item>
+	</ion-toolbar>
+</ion-header>
+<ion-content>
+	<div *ngFor="let message of chat" class="message-wrapper" on-hold="onMessageHold($event, $index, message)">
+		<div *ngIf="user.user_id != message.sender_user_id">
+		<!-- 	<img *ngIf="toUser.shop_image" routerLink="/merchant-details/{{toUser.user_id}}" class="profile-pic left" src="{{imageUrlShop}}{{toUser.shop_image}}" />
+			<img *ngIf="!toUser.shop_image" routerLink="/merchant-details/{{toUser.user_id}}" class="profile-pic left" src="{{defaultImage}}" />
+			 wave-->
+			<div class="chat-bubble left slide-left">
+
+				<div class="message bold" [innerHTML]="message.message" autolinker>
+				</div>
+
+<div class="message-detail">
+					<span>{{chatter.username}}</span>,
+					<span>{{message.sending_date}}</span>
+				</div>
+
+			</div>
+		</div>
+
+		<div *ngIf="user.user_id === message.sender_user_id">
+
+			<!--  <img *ngIf="message.sender.shop_image" routerLink="/merchant-details/{{message.sender.user_id}}" class="profile-pic right" src="{{imageUrlShop}}{{message.sender.shop_image}}" />
+			<img *ngIf="!message.sender.shop_image" routerLink="/merchant-details/{{message.sender.user_id}}" class="profile-pic right" src="{{defaultImage}}" /> -->
+
+			<div class="chat-bubble right slide-right">
+
+				<div class="message bold" [innerHTML]="message.message" autolinker>
+				</div>
+
+				<div class="message-detail">
+					<span>You</span>,
+					<span>{{message.sending_date}} <span>
+                  <img
+                    id="disable"
+                    *ngIf="message.msg_reading_status == 0"
+                    class="check_image"
+                    src="assets/images/check_disable.png"
+                  />
+                  <img
+                    id="enable"
+                    *ngIf="message.msg_reading_status == 1"
+                    class="check_image"
+                    src="assets/images/check_enable.png"
+                  />
+                </span></span>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="cf"></div>
+
+	</div>
+</ion-content>
+<ion-footer>
+
+		<ion-item>
+			<ion-input type="text" placeholder="Write Something..." [(ngModel)]="reply" placeholder="Send  a message..."></ion-input>
+			<button style="background:transparent;outline:none;" ion-button clear (click)="send_messge()" item-end><ion-icon class="footer-btn" name="send"></ion-icon></button>
+		</ion-item>
+
+</ion-footer>

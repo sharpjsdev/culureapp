@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+     <ion-buttons slot="start">
+      <ion-back-button style="color:#fff;" defaultHref="members/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Product</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+		  <ion-grid style="min-height:400px;height:auto;">
+	<form [formGroup]="form" (submit)="onSubmit()">
+			
+		    <ion-item>
+				<ion-label position="floating">Category</ion-label>
+				<ion-select placeholder="Select Category" ngModel="{{product.category_id}}" formControlName="category_id">
+					<div *ngFor="let field of categories" >
+						<ion-select-option value="{{field.id}}">{{field.name}}</ion-select-option>
+					</div>
+				</ion-select>
+			</ion-item>
+			<ion-item>
+				<ion-label position="floating">Product Name</ion-label>
+				
+				<ion-input type="text" ngModel="{{product.product_name}}"  formControlName="product_name"></ion-input>
+				<input type="hidden" ngModel="{{product.id}}" formControlName="product_id" />
+				<input type="hidden" ngModel="{{product.user_id}}" formControlName="user_id" />
+
+			</ion-item>
+			<ion-item>
+				<ion-label position="floating">Product Details</ion-label>
+				
+				<ion-textarea ngModel="{{product.description}}" formControlName="description" ></ion-textarea>
+			</ion-item>
+			
+            <ion-item>
+				
+				<ion-checkbox *ngIf="product.is_discount==1" style="margin:10px;" (ionChange)="addValue($event)"  ngModel="{{product.is_discount}}" formControlName="is_discount" color="primary"> </ion-checkbox>
+				
+				<ion-checkbox *ngIf="product.is_discount==0" style="margin:10px;" (ionChange)="addValue($event)" formControlName="is_discount" color="primary"> </ion-checkbox> Discount & Sale
+				
+			</ion-item>
+			<ion-item *ngIf="product.is_discount==0" id="discount" style="display:none;">
+				<ion-label position="floating">Discount Offer</ion-label>
+				
+				<ion-input type="text" ngModel="{{product.discount}}" formControlName="discount"></ion-input>
+				
+			</ion-item>	
+			<ion-item *ngIf="product.is_discount==1" id="discount" style="display:block;">
+				<ion-label position="floating">Discount Offer</ion-label>
+				
+				<ion-input type="text" ngModel="{{product.discount}}" formControlName="discount"></ion-input>
+				
+			</ion-item>
+						<ion-item>
+				<ion-label position="floating">Price</ion-label>
+				
+				<ion-input type="number" ngModel="{{product.total}}" formControlName="total"></ion-input>
+				
+			</ion-item>
+            <ion-item>
+				<ion-row>
+					<ion-col>
+						<ion-thumbnail class="add-form-thumb" item-start>
+							<img *ngIf="product.image" (click)="show_content(0)" src="{{imageUrl}}{{product.image}}">
+							<img *ngIf="!product.image" [src]="defaultImage">
+							
+							<input type="hidden" formControlName="image" ngModel="{{product.image}}" />
+							<input type="file" id="image" (change)="onFileSelected($event)" hidden>
+						</ion-thumbnail>
+						<ion-icon class="btn-icon" name="create" (click)="trigger()" ></ion-icon>
+						<ion-icon *ngIf="product.image" class="btn-icon" name="close" (click)="removeContent('image')" ></ion-icon>
+					</ion-col>
+               </ion-row>
+			</ion-item>
+			
+			
+			<ion-button type="submit" shape="round" class="btnclass" expand="full" color="primary"  [disabled]="form.invalid">Update</ion-button>
+			<ion-row style="height: 50px;"></ion-row>
+			
+		</form>
+	
+</ion-grid>
+
+
+</ion-content>
+

@@ -1,0 +1,126 @@
+ ion-content {
+    background: linear-gradient(0deg, #eeeef1 0%, white 80%, white 100%);
+  }
+  button,
+  ion-button,
+  .button-md,
+  .button-ios {
+    text-transform: none !important;
+  }
+  p {
+    color: #444;
+  }
+.edit-btn{
+position: absolute;
+left: 60%;
+top: 35%;
+}  
+  .bb{
+  
+  color: #fff;
+position: absolute;
+background: #0000004f;
+font-size: 25px;
+border-radius: 50%;
+margin: 15px;
+padding: 10px;
+  }
+  .pp{
+  
+  color: #fff;
+position: absolute;
+background: #0000004f;
+font-size: 25px;
+border-radius: 50%;
+margin: 15px;
+padding: 10px;
+left:80%;
+  }
+  // Cover image
+  #profile-bg {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    margin-top: -16px;
+    height: 160px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+  }
+  // Profile content
+  #content {
+    position: relative;
+    margin-top: 150px;
+    padding-top: 180px;
+    text-align: center;
+  }
+  #profile-image {
+  display: block;
+border-radius: 50%;
+width: 100px;;
+height: 100px;
+margin-top: 20px;
+border: 3px solid #fff;
+object-fit: cover;
+
+ /*   box-shadow: 0px 11px 20px -3px rgba(142, 136, 146, 0.75);*/
+  }
+  #profile-info {
+    position: absolute;
+    top: -95px;
+    width: 100%;
+    z-index: 2;
+    text-align: left;
+margin-left: 15px;
+  }
+  #profile-name {
+    color: #444;
+    font-size: 20px;
+	margin:3px;
+  }
+  .profile-description {
+    font-size: 15px;
+    color: #888;
+	margin:0px;
+  }
+  .follow-button {
+    text-transform: none;
+    border-radius: 3px !important;
+    ion-icon {
+      font-weight: bold;
+      padding-left: 5px;
+      font-size: 2.5rem;
+    }
+  }
+  // Following, Followers and all..
+  .profile-numbers {
+    p {
+      color: #444;
+      font-size: medium;
+      margin: 0px;
+    }
+    span {
+      font-weight: bold;
+      font-size: 1.4rem;
+      color: #34354c;
+    }
+  }
+  
+  hr {
+    border: 0;
+    height: 1px;
+    background: #444;
+    background: -webkit-linear-gradient(left, hsla(0, 0%, 0%, 0) 0%, rgb(188, 198, 214) 50%, hsla(0, 0%, 0%, 0) 100%);
+  }
+  // Posts feed
+  #posts {
+    text-align: justify;
+  }
+   :root {
+ --ion-safe-area-top: 25px;
+ --ion-safe-area-bottom: 27px;
+ }
+ ion-slide {
+
+ } 

@@ -1,0 +1,38 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+   <ion-buttons slot="start">
+      <ion-back-button style="color:#fff;" defaultHref="members/tab1"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="color:#fff;" class="capitalize">
+Notifications
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content [fullscreen]="true">
+
+    <ion-grid>
+    	  <ng-container *ngFor="let item of notification; let i = index;">
+
+  <ion-item>
+      <ion-avatar (click)="showUser(item.user_id)" item-start style="height:40px;width:40px;" >
+		  <img src="{{ imageUrl }}{{ item.image.thumb_image }}" >
+      </ion-avatar>
+	  	  <ion-label style="margin:5px;">
+      <h2 style="font-size:12px;" (click)="showUser(item.user_id)">{{item.followersName.username}}</h2>
+      <p style="font-size:11px;">{{item.message}}</p>
+      <p style="font-size:11px;">{{ item.created_at }}</p>
+	   </ion-label>
+	   
+  <ion-button (click)="confirmDelete(item.id,i)" slot="end">
+   delete
+  </ion-button>
+
+</ion-item>
+ </ng-container>
+    </ion-grid>
+
+</ion-content>

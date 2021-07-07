@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar color="#fff">
+   <ion-buttons  slot="start">
+           <ion-back-button color="gray" defaultHref="/members/tab1" text=""></ion-back-button>
+
+    </ion-buttons>
+       <ion-input
+        type="text"
+        [(ngModel)]="search"
+        (keyup)="onSearch()"
+        class="form-control post_bottom_comment_2"
+        placeholder="Search..."
+      ></ion-input>
+  </ion-toolbar>
+</ion-header>
+<ion-content color="white" padding >
+<ion-grid  *ngIf="followers">	
+	<p style="color: #fe1743;
+margin: 0px 0px 0px 15px;">Followers</p>
+  <ion-list *ngFor="let user of followers">
+	  <ion-list-header (click)="showProfile(user.user_id)">
+      <ion-avatar item-start >
+        <img src="{{ imagePath }}{{ user.image.thumb_image }}" >
+      </ion-avatar>
+	  	  <ion-label style="margin:15px;">
+      <h2 (click)="showProfile(user.id)">{{user.name}}</h2>
+      <p>{{user.username}}</p>
+	   </ion-label>
+  
+    </ion-list-header>
+  </ion-list>
+</ion-grid>
+  </ion-content> 
+
+	

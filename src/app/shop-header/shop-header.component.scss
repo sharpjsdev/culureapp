@@ -1,0 +1,28 @@
+.customBadge {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    background: #fe1743;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    bottom: 10px;
+    left: 20px;
+    color: #fff;
+    font-size: 12px;
+} 
+.topmenu{
+
+margin-right: 5px;
+font-size: 20px;
+margin-left: 10px;
+}
+.btnclass{
+
+height: 25px;
+font-size: 12px;
+--padding-start: 0;
+--padding-end: 10px;
+text-transform:capitalize;
+
+}
